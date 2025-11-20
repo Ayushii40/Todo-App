@@ -8,9 +8,12 @@ const {
   updateTask,
   deleteTask,
   toggleTaskStatus,
+  searchTasks,
 } = require("../controllers/taskController");
 
+
 router.get("/", auth, getTasks);
+router.get("/search", auth, searchTasks);
 router.post("/create", auth, createTask);
 router.put("/update/:id", auth, updateTask);
 router.put("/toggle/:id", auth, toggleTaskStatus);

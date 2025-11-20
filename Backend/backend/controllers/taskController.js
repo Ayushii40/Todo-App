@@ -10,6 +10,26 @@ exports.getTasks = async (req, res) => {
   }
 };
 
+//search the tasks
+exports.searchTasks = async (req, res) => {
+  try {
+    const query = req.query.q || "";
+
+    const tasks = await Task.find({
+      userId: req.user.id,
+      $or: [
+        { title: { $regex: query, $options: "i" } },
+        { description: { $regex: query, $options: "i" } },
+      ],
+    });
+
+    res.json(tasks);
+  } catch (error) {
+    res.status(500).json({ message: "Error searching tasks" });
+  }
+};
+
+
 // Create new task
 exports.createTask = async (req, res) => {
   try {
